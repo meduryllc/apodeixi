@@ -1,0 +1,13 @@
+BeforeRunningTests.txt
+compiled/
+deployContracts.sh
+deployment/
+eosioCompile.sh
+node_modules/
+*/node_modules/*
+web/server
+scripts/
+jungleTestAccounts
+nodeos.log
+runNodeos.sh
+importKeys.sh
