@@ -11,3 +11,4 @@ jungleTestAccounts
 nodeos.log
 runNodeos.sh
 importKeys.sh
+web/client/dist

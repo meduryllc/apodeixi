@@ -4,7 +4,7 @@ import ScatterJS from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs2';
 
 
-const endpoint = 'http://jungle2.cryptolions.io:80'; // Jungle
+const endpoint = 'https://jungle2.cryptolions.io:443'; // Jungle
 const network = {
   blockchain: 'eos',
   protocol: 'https',
