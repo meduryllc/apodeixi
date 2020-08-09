@@ -132,7 +132,7 @@ export default {
       var presentSignOptions={
         issuer:decoded.payload.sub,
         audience: audience,
-        expiresIn: "10m",
+        expiresIn: "2m",
         jwtid:id,
         algorithm: "ES256"
       }

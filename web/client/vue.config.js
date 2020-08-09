@@ -1,7 +1,3 @@
 module.exports = {
-  /*
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/eosio-immunity-passport/'
-    : '/'
-  */
-}
+  publicPath: process.env.NODE_ENV === "production" ? "/apodeixi/" : "/"
+};
