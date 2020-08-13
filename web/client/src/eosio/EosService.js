@@ -92,6 +92,7 @@ class EosService {
   };
 
   getRequests = async(account) =>{
+     
       const res= await this.rpc.get_table_rows({
         json: true,
         code: credentialContract,

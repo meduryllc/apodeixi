@@ -178,10 +178,14 @@ export default {
         this.showAlert=true;
         document.getElementById("card").style.display="none";
         document.getElementById("form").style.display="none";
-
+        try{
+          await this.eosio.transaction('issue',{_requester_name: this.name, _issuer_name: this.eosio.account.name})
+        }catch(error){
+          console.log(error);
+        }
         var blob=new Blob([token],{type:"text/plain; charset=utf-8"});
         saveAs(blob,"jwtToken.txt");
-        
+
         },
 
 
@@ -253,6 +257,7 @@ export default {
         return console.log('Failed to get Scatter account');
         
       try{
+        
         let requests=await this.eosio.getRequests();
         let array=[];
         let identifiers=[];
