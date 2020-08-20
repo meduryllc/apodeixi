@@ -66,7 +66,7 @@ eoslime test
 ## Local Deployment
 Make sure you've initialized scatter before interacting with the DApp
 ```bash
-cd/web/client
+cd /web/client
 npm run serve
 ```
 
