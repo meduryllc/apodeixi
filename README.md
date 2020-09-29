@@ -1,5 +1,16 @@
 # Apodeixi Verifiable Credentials
 
+Apodeixi is an academic credentials management system built on the EOSIO blockchain platform. It was developed following the Decentralized Identity (DID) framework and the Verifiable Credentials (VC) framework.
+
+Try out our PoC DApp at this [link](https://meduryllc.github.io/apodeixi/).
+
+The PoC DApp is connected to smart contracts deployed on [**Jungle Test Network**](https://jungletestnet.io/). Create a [new account](https://eosio.stackexchange.com/a/3247), if you don't already have one, and connect using [Scatter](https://get-scatter.com/). Follow [this video](https://www.youtube.com/watch?v=6Yf-cHg4k90) to connect your Jungle Test Network account with Scatter.
+
+This product was developed during participation in Spark University Hackathon 2020
+
+Authors: Sai Medury & Lalith Medury \
+Contact: sai.abhijit777@gmail.com, lalith.aakash970@gmail.com
+
 ## Installation
 
 Download/clone the project
@@ -7,12 +18,6 @@ Download/clone the project
 ```bash
 git clone https://github.com/meduryllc/apodeixi
 ```
-This product was developed during participation in Spark University Hackathon 2020
-
-Authors: Sai Medury & Lalith Medury \
-Contact: sai.abhijit777@gmail.com, lalith.aakash970@gmail.com
-
-The PoC DApp is connected to smart contracts deployed on [**Jungle Test Network**](https://jungletestnet.io/). Create a [new account](https://eosio.stackexchange.com/a/3247), if you don't already have one, and connect using [Scatter](https://get-scatter.com/). Follow [this video](https://www.youtube.com/watch?v=6Yf-cHg4k90) to connect your Jungle Test Network account with Scatter.
 
 ## Unit Tests
 
@@ -61,7 +66,7 @@ eoslime test
 ## Local Deployment
 Make sure you've initialized scatter before interacting with the DApp
 ```bash
-cd/web/client
+cd /web/client
 npm run serve
 ```
 

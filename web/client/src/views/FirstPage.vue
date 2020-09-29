@@ -8,25 +8,29 @@
               <b-alert  v-model="showAlert" dismissible variant="info">
               Please run scatter before interacting with the application
               </b-alert>
+              <b-alert  v-model="showDismissibleAlert" dismissible variant="danger">
+              Could not find your credentials
+              </b-alert>
               <hr>
               <b-row>
-                <b-col>
+                <b-col sm>
                   <img src="../assets/individual.png" @click="handleLogin()">
                 </b-col>
-                <b-col>
+                <b-col sm>
                   <img src="../assets/employee.jpg" @click="handleWorkerLogin()">
                 </b-col>
                 
               </b-row>
-              <b-row>
-                <b-col>
-                  <h3>Student Login</h3>
-                </b-col>
-                <b-col>
-                  <h3>Employee Login</h3>
-                </b-col>
-              </b-row>
-              <pre><p id="colorRed">Could not find your credentials</p></pre>
+              <div class="d-none d-md-block">
+                <b-row>
+                  <b-col>
+                    <h3>Student Login</h3>
+                  </b-col>
+                  <b-col>
+                    <h3>Employee Login</h3>
+                  </b-col>
+                </b-row>
+              </div>
                 <hr>
                 <pre><span>Don't already have an account? <router-link to="/login">Get a DID here</router-link> </span></pre>
                 <pre><span>To verify a university credential, click <router-link to="/verify">here</router-link> </span></pre>
@@ -45,6 +49,7 @@ export default {
   data() {
     return {
       showAlert: '',
+      showDismissibleAlert:false,
       email: '',
       orgName: '',
       license: '',
@@ -75,7 +80,7 @@ export default {
           this.$router.push('individual');
         }
         else {
-          document.querySelector('#colorRed').style.display="inline";
+          this.showDismissibleAlert=true;
         }
       }catch(error){
         console.log(error);

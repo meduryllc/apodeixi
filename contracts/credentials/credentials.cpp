@@ -48,40 +48,22 @@ class [[eosio::contract("credentials")]] credentials : public eosio::contract {
        });
     }
 
-    /**
-     * @brief HealthWorker validates individual govt. id and
-     * enters the id number; upon validation the entry is removed
-     * from the list: initiation_requests and added to
-     * list: pending_reports
-     * @param requester_name key/account of requester
-     * @param govt_id_number the license number/ ssn 
-     */
-    ACTION validate(eosio::name _requester_name, eosio::name _health_worker_name, std::string _govt_id_number){
+    
+    ACTION issue(eosio::name _requester_name, eosio::name _issuer_name){
       
-      eosio::require_auth(_health_worker_name);
+      eosio::require_auth(_issuer_name);
       auto itr = requests_table.find(_requester_name.value);
       eosio::check(itr!=requests_table.end(), "Couldn't find a request with this account");
 
       // TODO: What if there are more than one request for an individual with different healthworkers?
-      eosio::check(itr->healthworker_name==_health_worker_name,"The healthworker found on record for this request is different from the one you entered");
-
-      pendings_table.emplace(_health_worker_name,[&](auto& pending){
-        pending.requester_name = _requester_name;
-        pending.healthworker_name = _health_worker_name;
-        pending.individual_govt_id = _govt_id_number;
-      });
+      eosio::check(itr->healthworker_name==_issuer_name,"The organization representative found on record for this request is different from the one you entered");
 
       requests_table.erase(itr);
+
     }
 
-
-    /**
-     * @brief Health Worker validates request and issues
-     * Immunity Passport upon testing positive; the test
-     * report id is also added; entry is removed from pending_reports
-     * @param _requester_name key/account of register
-     * @param _testreport_id unique identifier of the report
-     */
+    
+    /*
     ACTION issue(eosio::name _requester, eosio::name _healthworker, uint64_t _testreport_id){
       
       auto itr = pendings_table.find(_requester.value);
@@ -112,13 +94,7 @@ class [[eosio::contract("credentials")]] credentials : public eosio::contract {
 
     }
 
-    /**
-     * @brief Health Worker completes request and denies
-     * Immunity Passport based on test report; entry is removed
-     * from pending_reports
-     * @param _requester_name key/account of register
-     * @param _testreport_id unique identifier of the report
-     */
+    
     ACTION reject(eosio::name _requester, eosio::name _healthworker, uint32_t _testreport_id){
       eosio::require_auth(_healthworker);
       auto itr = pendings_table.find(_requester.value);
@@ -136,28 +112,12 @@ class [[eosio::contract("credentials")]] credentials : public eosio::contract {
       eosio::check(itr!=immpass_table.end(),"Could not find Immunity Passport for your account");
       eosio::check(itr->expiry_time>eosio::current_time_point(),"Found Immunity passport is no longer valid");
     }
-    /*
-    using initiate_action = eosio::action_wrapper<"initiate"_n, &credentials::initiate>;
-    using validate_action = eosio::action_wrapper<"validate"_n, &credentials::validate>;
-    using issue_action = eosio::action_wrapper<"issue"_n, &credentials::issue>;
-    using reject_action = eosio::action_wrapper<"reject"_n, &credentials::reject>;
-    using verify_action = eosio::action_wrapper<"verify"_n, &credentials::verify>;
     */
-
+    
   private:
 
     struct [[eosio::table]] certificate{
-      // TODO: Should we use individual did as key?
-      // Note: primary key of struct must be of type uint64_t etc.
-      /*
-      std::string individual_did;
-      std::string individual_govt_id;
-      // TODO: Decide if public_key needs to be string or not
-      eosio::public_key pub_key;
-      // TODO: Should this be did of health worker? 
-      std::string health_worker_id;
-      uint64_t test_report_id;
-      */
+      
       eosio::name individual;
       // TODO: Decide if this needs to be time_point_sec
       eosio::time_point_sec expiry_time;

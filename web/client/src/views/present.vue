@@ -61,14 +61,18 @@
   </v-container>
 </template>
 
+<script src="qrcode.js"></script>
 <script>
 
 
 import EosService from '@/eosio/EosService';
 import jwt from 'jsonwebtoken';
 import {saveAs} from 'file-saver';
+import { jsPDF } from "jspdf";
+
 
 export default {
+  
   data() {
     return {
       token: null,
@@ -87,6 +91,7 @@ export default {
       eosio: null
     };
   },
+  
   methods: {
     getKey: async function(evt){
       var reader=new FileReader();
@@ -132,7 +137,7 @@ export default {
       var presentSignOptions={
         issuer:decoded.payload.sub,
         audience: audience,
-        expiresIn: "10m",
+        expiresIn: "2m",
         jwtid:id,
         algorithm: "ES256"
       }
@@ -145,7 +150,66 @@ export default {
       document.getElementById("disp").style.display="none";
       var blob=new Blob([token],{type:"text/plain; charset=utf-8"});
       saveAs(blob,"jwtPresentation.txt");
+      const doc = new jsPDF('p', 'mm', [297, 210]);
       
+      
+      var today=new Date();
+      var date=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'T';
+      var time=today.getHours()+':'+today.getMinutes()+":"+today.getSeconds()+'Z';
+      var credDate=new Date(0);
+      credDate.setUTCSeconds(decoded.payload.iat);
+      var cred={
+        context: ["https://www.w3.org/2018/credentials/v1","https://www.w3.org/2018/credentials/examples/v1"],
+        type: "VerifiablePresentation",
+        verifiableCredential:{
+          context: ["https://www.w3.org/2018/credentials/v1","https://www.w3.org/2018/credentials/examples/v1"],
+          type: ["VerifiableCredential","AlumniCredential"],
+          issuer: decoded.payload.iss,
+          issuanceDate: credDate,
+          credentialSubject: {
+            id: decoded.payload.sub,
+            degree: {
+              type: "Bachelors",
+              name: "Computer Science and Engineering"
+            }
+          },
+          proof: {
+            type: "EcdsaSignature",
+            created: credDate,
+            proofPurpose: "assertionMethod",
+            verificationMethod: "publicKey",
+            jws: token
+          }
+        },
+        proof: {
+          type: "EcdsaSignature",
+          created: date+time,
+          proofPurpose: "authentication",
+          verificationMethod: "publicKey"
+        }
+          
+      }
+      //console.log(cred.issuer);
+      doc.setFontSize(32);
+      doc.text("Verifiable Presentation",50,30);
+      doc.setFontSize(12);
+      doc.text("Context: "+cred.context[0],10,55);
+      doc.text(cred.context[1],27,60);
+      doc.text("Type:     "+cred.type,10,70);
+      
+      doc.text("Issuer:   "+cred.verifiableCredential.issuer,10,80);
+      doc.text("Issuance date: "+cred.verifiableCredential.issuanceDate,10,90);
+      doc.text("Issued to: "+cred.verifiableCredential.credentialSubject.id,10,100);
+      doc.text("Degree Type: "+cred.verifiableCredential.credentialSubject.degree.type,10,110);
+      doc.text("Degree Name: "+cred.verifiableCredential.credentialSubject.degree.name,10,120);
+      doc.text("Proof Type: "+cred.verifiableCredential.proof.type,10,130);
+      doc.text("Created on: "+cred.verifiableCredential.proof.created,10,140);
+      doc.text("Proof Purpose: "+cred.proof.proofPurpose,10,150);
+      doc.text("Verification Method: "+cred.proof.verificationMethod,10,160);
+      doc.text("Proof Created: "+cred.proof.created,10,170);
+      doc.text("Audience: "+presentSignOptions.audience,10,180);
+      
+      doc.save("Presentation.pdf");
     },
     setVal: async function(token){
       console.log(token);

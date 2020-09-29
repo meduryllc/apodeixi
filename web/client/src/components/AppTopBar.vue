@@ -6,9 +6,9 @@
       <v-spacer class="hidden-md-and-up"></v-spacer>
       <v-spacer></v-spacer>
       <v-btn @click="initiated()" v-if="$store.state.identity==='worker'">Initiated</v-btn>
-      <v-btn @click="pending()" v-if="$store.state.identity==='worker'">Pending</v-btn>
+
       <v-btn @click="request()" v-if="$store.state.identity==='individual'">Request</v-btn>
-      <v-btn @click="view()" v-if="$store.state.identity==='individual'">View</v-btn>
+      <v-btn @click="view()" v-if="$store.state.identity==='individual'">Present</v-btn>
       <v-btn @click="handleLogout()" v-if="$store.state.loggedIn">Logout</v-btn>
     </v-toolbar>
   </span>
@@ -39,10 +39,10 @@ export default {
       this.$router.push('requests');
     },
     request: async function(){
-      this.$router.push('immpass');
+      this.$router.push('request');
     },
     view: async function(){
-      this.$router.push('view');
+      this.$router.push('present');
     }
   }
 };

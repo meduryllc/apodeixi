@@ -7,10 +7,13 @@
             <p id="colorRed">Could not process the details</p>
             <p id="red">Domain did not match with the listed domain of the organization</p>
           <b-alert  v-model="showDismissibleAlert" @dismissed="showDismissibleAlert=false" variant="danger" dismissible>
-              Sorry. You are not the intended audience
+              Sorry, You are not the intended audience. JWT is invalid
               </b-alert>
                <b-alert  v-model="expired" @dismissed="expired=false" variant="danger" dismissible>
-              JWT is expired
+              JWT has expired
+              </b-alert>
+              <b-alert  v-model="showFailed" @dismissed="expired=false" variant="danger" dismissible>
+              Sorry, Signature Verification failed. JWT is invalid
               </b-alert>
               <b-alert  v-model="showSuccess" variant="success">
               JWT is Verified
@@ -64,6 +67,7 @@ export default {
     return {
       showUpload:false,
       file: null,
+      showFailed: false,
       expired: false,
       showAlert: false,
       showDismissibleAlert: false,
@@ -122,7 +126,7 @@ export default {
       }
     },
     resolve: async function(){
-      
+      console.log("Here");
       try{
         var token=this.form.token;
         var decoded=jwt.decode(token, {complete: true});
@@ -132,7 +136,8 @@ export default {
         
         this.$bvModal.show('modal-1');
       }catch(error){
-        this.showDismissibleAlert=true;
+        
+        this.showFailed=true;
       }
       
       if (this.eosio === null) {
@@ -174,7 +179,7 @@ export default {
         this.showSuccess=true;
         this.$bvModal.hide('modal-1');
       }catch(error){
-        this.showDismissibleAlert=true;
+        this.showFailed=true;
         console.log(error);
       }
 
