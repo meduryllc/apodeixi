@@ -4,13 +4,13 @@ import ScatterJS from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs2';
 
 
-const endpoint = 'https://jungle2.cryptolions.io:443'; // Jungle
+const endpoint = 'https://jungle3.cryptolions.io:443'; // Jungle
 const network = {
   blockchain: 'eos',
   protocol: 'https',
   host: 'jungle2.cryptolions.io',
   port: 443,
-  chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473'
+  chainId: '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840'
 };
 
 /*

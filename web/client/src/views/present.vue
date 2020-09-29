@@ -61,6 +61,7 @@
   </v-container>
 </template>
 
+<script src="qrcode.js"></script>
 <script>
 
 
@@ -69,7 +70,9 @@ import jwt from 'jsonwebtoken';
 import {saveAs} from 'file-saver';
 import { jsPDF } from "jspdf";
 
+
 export default {
+  
   data() {
     return {
       token: null,
@@ -88,6 +91,7 @@ export default {
       eosio: null
     };
   },
+  
   methods: {
     getKey: async function(evt){
       var reader=new FileReader();
@@ -204,7 +208,8 @@ export default {
       doc.text("Verification Method: "+cred.proof.verificationMethod,10,160);
       doc.text("Proof Created: "+cred.proof.created,10,170);
       doc.text("Audience: "+presentSignOptions.audience,10,180);
-      doc.save("Credential.pdf");
+      
+      doc.save("Presentation.pdf");
     },
     setVal: async function(token){
       console.log(token);
