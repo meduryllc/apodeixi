@@ -11,7 +11,7 @@
     "@babel/polyfill": "^7.0.0-rc.1",
     "@sendgrid/mail": "^7.1.1",
     "@vue/cli": "^4.5.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap-vue": "^2.15.0",
     "eosjs": "20.0.0-beta2",
     "jsonwebtoken": "^8.5.1",
